@@ -48,6 +48,13 @@ public class SampleListener extends Listener {
 		}
 	}
 	
+	public void onFist(float angle) {
+		if (angle > 3)
+			System.out.println("fist");
+		else
+			System.out.println("not fist");
+	}
+	
 	public void onFrame(Controller controller) {
         com.leapmotion.leap.Frame frame = controller.frame();
 	        
@@ -83,7 +90,9 @@ public class SampleListener extends Listener {
          *     z: avant/arrière -> négatif = avant, positif = arrière
          */
         //System.out.println("pitch main gauche : " + roll);
-        //onMovtPalm(handLeft.palmPosition().getZ());
+        onMovtPalm(handLeft.palmPosition().getZ());
+        onMovtPitch(pitch);
         onMovtRoll(roll);
+        //onFist(handRight.grabAngle());
 	}
 }
