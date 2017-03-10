@@ -6,7 +6,7 @@
 
 QT_USE_NAMESPACE
 
-class ChatServer;
+class CommandServer;
 
 //! [declaration]
 class Chat : public QObject
@@ -22,7 +22,7 @@ private slots:
 private:
     int currentAdapterIndex;
 
-    ChatServer *server;
+    CommandServer *server;
     QList<QBluetoothHostInfo> localAdapters;
 
     QString localName;

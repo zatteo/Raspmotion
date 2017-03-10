@@ -1,25 +1,23 @@
-#include "chatserver.h"
+#include "commandserver.h"
 
 #include <qbluetoothserver.h>
 #include <qbluetoothsocket.h>
 #include <qbluetoothlocaldevice.h>
 
-//! [Service UUID]
 static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
-//! [Service UUID]
 
-ChatServer::ChatServer(QObject *parent)
+CommandServer::CommandServer(QObject *parent)
 :   QObject(parent), rfcommServer(0)
 {
     qDebug() << "constructeur du serveur";
 }
 
-ChatServer::~ChatServer()
+CommandServer::~CommandServer()
 {
     stopServer();
 }
 
-void ChatServer::startServer(const QBluetoothAddress& localAdapter)
+void CommandServer::startServer(const QBluetoothAddress& localAdapter)
 {
     if (rfcommServer)
         return;
@@ -88,7 +86,7 @@ void ChatServer::startServer(const QBluetoothAddress& localAdapter)
 }
 
 //! [stopServer]
-void ChatServer::stopServer()
+void CommandServer::stopServer()
 {
     // Unregister service
     serviceInfo.unregisterService();
@@ -103,7 +101,7 @@ void ChatServer::stopServer()
 //! [stopServer]
 
 //! [sendMessage]
-void ChatServer::sendMessage(const QString &message)
+void CommandServer::sendMessage(const QString &message)
 {
     QByteArray text = message.toUtf8() + '\n';
 
@@ -113,7 +111,7 @@ void ChatServer::sendMessage(const QString &message)
 //! [sendMessage]
 
 //! [clientConnected]
-void ChatServer::clientConnected()
+void CommandServer::clientConnected()
 {
     qDebug() << "Client connected";
     QBluetoothSocket *socket = rfcommServer->nextPendingConnection();
@@ -128,7 +126,7 @@ void ChatServer::clientConnected()
 //! [clientConnected]
 
 //! [clientDisconnected]
-void ChatServer::clientDisconnected()
+void CommandServer::clientDisconnected()
 {
     QBluetoothSocket *socket = qobject_cast<QBluetoothSocket *>(sender());
     if (!socket)
@@ -143,7 +141,7 @@ void ChatServer::clientDisconnected()
 //! [clientDisconnected]
 
 //! [readSocket]
-void ChatServer::readSocket()
+void CommandServer::readSocket()
 {
     qDebug() << "readSocket()";
     QBluetoothSocket *socket = qobject_cast<QBluetoothSocket *>(sender());

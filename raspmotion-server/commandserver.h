@@ -1,5 +1,5 @@
-#ifndef CHATSERVER_H
-#define CHATSERVER_H
+#ifndef COMMANDSERVER_H
+#define COMMANDSERVER_H
 
 #include <qbluetoothserviceinfo.h>
 #include <qbluetoothaddress.h>
@@ -13,13 +13,13 @@ QT_FORWARD_DECLARE_CLASS(QBluetoothSocket)
 QT_USE_NAMESPACE
 
 //! [declaration]
-class ChatServer : public QObject
+class CommandServer : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ChatServer(QObject *parent = 0);
-    ~ChatServer();
+    explicit CommandServer(QObject *parent = 0);
+    ~CommandServer();
 
     void startServer(const QBluetoothAddress &localAdapter = QBluetoothAddress());
     void stopServer();
@@ -44,4 +44,4 @@ private:
 };
 //! [declaration]
 
-#endif // CHATSERVER_H
+#endif // COMMANDSERVER_H

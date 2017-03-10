@@ -6,11 +6,11 @@ QT = core bluetooth
 SOURCES = \
     main.cpp \
     chat.cpp \
-    chatserver.cpp
+    commandserver.cpp
 
 HEADERS = \
     chat.h \
-    chatserver.h
+    commandserver.h
 
 target.path = $$[QT_INSTALL_EXAMPLES]/bluetooth/btchat
 INSTALLS += target
