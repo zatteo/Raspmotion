@@ -37,9 +37,6 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
-#include "ui_chat.h"
-
 #include <qbluetoothserviceinfo.h>
 #include <qbluetoothsocket.h>
 #include <qbluetoothhostinfo.h>
@@ -78,7 +75,6 @@ private slots:
 private:
 //    int adapterFromUserSelection() const;
     int currentAdapterIndex;
-    Ui_Chat *ui;
 
     ChatServer *server;
 //    QList<ChatClient *> clients;
