@@ -11,9 +11,5 @@ int main(int argc, char *argv[])
 
     client.discoverAndStart();
 
-//    sleep(10);
-
-//    client.sendMessage("salut");
-
     return a.exec();
 }
