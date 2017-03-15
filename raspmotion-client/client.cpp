@@ -6,7 +6,7 @@ Client::Client(QObject *parent): QObject(parent){}
 
 void Client::discoverAndStart()
 {
-    qDebug() << "Lancement de la recherche" << endl;
+    qDebug() << "Searching a CommandServer..." << endl;
     QBluetoothServiceDiscoveryAgent *discoveryAgent = new QBluetoothServiceDiscoveryAgent(this);
 
     connect(discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)), this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
@@ -33,21 +33,21 @@ void Client::serviceDiscovered(const QBluetoothServiceInfo &service)
 
 void Client::fini()
 {
-    qDebug() << "fini";
+    qDebug() << "Search done.";
 }
-
 
 void Client::start()
 {
     if(!serviceInfo)
         return;
 
-    qDebug() << "laucnhing connecyion";
-    // connexion au service
+    qDebug() << "Waiting for connection with the CommandServer...";
     socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
     qDebug() << "Création du socket";
     socket->connectToService(*serviceInfo);
     qDebug() << "ConnectToService done";
+
+    qDebug() << serviceInfo;
 
     connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
     connect(socket, SIGNAL(connected()), this, SLOT(connected()));
@@ -87,5 +87,6 @@ void Client::readSocket()
     while (socket->canReadLine()) {
         QByteArray line = socket->readLine();
         emit messageReceived(socket->peerName(), QString::fromUtf8(line.constData(), line.length()));
+        qDebug() << QString::fromUtf8(line.constData(), line.length());
     }
 }
