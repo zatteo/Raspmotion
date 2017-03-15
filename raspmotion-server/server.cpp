@@ -1,4 +1,4 @@
-#include "chat.h"
+#include "server.h"
 #include "commandserver.h"
 
 #include <qbluetoothuuid.h>
@@ -13,14 +13,10 @@
 
 static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
 
-Chat::Chat(QObject *parent)
-    :  currentAdapterIndex(0)
+Server::Server(QObject *parent): currentAdapterIndex(0)
 {
-    qDebug() << "constructeur du chat";
-
     localAdapters = QBluetoothLocalDevice::allDevices();
 
-    //! [Create Chat Server]
     server = new CommandServer(this);
     connect(server, SIGNAL(clientConnected(QString)), this, SLOT(clientConnected(QString)));
     connect(server, SIGNAL(clientDisconnected(QString)), this, SLOT(clientDisconnected(QString)));
@@ -28,15 +24,11 @@ Chat::Chat(QObject *parent)
             this, SLOT(showMessage(QString,QString)));
     connect(this, SIGNAL(sendMessage(QString)), server, SLOT(sendMessage(QString)));
     server->startServer();
-    //! [Create Chat Server]
 
-    //! [Get local device name]
     localName = QBluetoothLocalDevice().name();
-    //! [Get local device name]
 }
 
-Chat::~Chat()
+Server::~Server()
 {
-//    qDeleteAll(clients);
     delete server;
 }

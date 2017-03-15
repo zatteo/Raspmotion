@@ -8,14 +8,13 @@ QT_USE_NAMESPACE
 
 class CommandServer;
 
-//! [declaration]
-class Chat : public QObject
+class Server : public QObject
 {
     Q_OBJECT
 
 public:
-    Chat(QObject *parent = 0);
-    ~Chat();
+    Server(QObject *parent = 0);
+    ~Server();
 
 private slots:
 
@@ -27,4 +26,3 @@ private:
 
     QString localName;
 };
-//! [declaration]

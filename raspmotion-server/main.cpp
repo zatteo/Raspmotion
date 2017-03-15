@@ -1,4 +1,4 @@
-#include "chat.h"
+#include "server.h"
 
 #include <QCoreApplication>
 
@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
-    Chat d;
+    Server d;
 
     return app.exec();
 }

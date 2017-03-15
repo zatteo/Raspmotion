@@ -12,7 +12,6 @@ QT_FORWARD_DECLARE_CLASS(QBluetoothSocket)
 
 QT_USE_NAMESPACE
 
-//! [declaration]
 class CommandServer : public QObject
 {
     Q_OBJECT
@@ -40,8 +39,7 @@ private slots:
 private:
     QBluetoothServer *rfcommServer;
     QBluetoothServiceInfo serviceInfo;
-    QList<QBluetoothSocket *> clientSockets;
+    QBluetoothSocket *client;
 };
-//! [declaration]
 
 #endif // COMMANDSERVER_H
