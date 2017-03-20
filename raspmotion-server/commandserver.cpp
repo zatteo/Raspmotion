@@ -1,9 +1,5 @@
 #include "commandserver.h"
 
-#include <qbluetoothserver.h>
-#include <qbluetoothsocket.h>
-#include <qbluetoothlocaldevice.h>
-
 static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
 
 CommandServer::CommandServer(QObject *parent): QObject(parent), rfcommServer(0)
@@ -25,7 +21,8 @@ void CommandServer::startServer(const QBluetoothAddress& localAdapter)
     connect(rfcommServer, SIGNAL(newConnection()), this, SLOT(clientConnected()));
 
     bool result = rfcommServer->listen(localAdapter);
-    if (!result) {
+    if (!result)
+    {
         qWarning() << "ERR : Cannot bind chat server to" << localAdapter.toString();
         return;
     }
@@ -84,7 +81,6 @@ void CommandServer::sendMessage(const QString &message)
 
 void CommandServer::clientConnected()
 {
-    qDebug() << "Client connected";
     QBluetoothSocket *socket = rfcommServer->nextPendingConnection();
     if (!socket)
         return;
@@ -93,9 +89,9 @@ void CommandServer::clientConnected()
     connect(socket, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
     client = socket;
     emit clientConnected(socket->peerName());
+    qDebug() << "CommandController connected";
 
-    sendMessage("bonjour à toi aussi");
-    sendMessage("ça va ?");
+    sendMessage(TOP);
 }
 
 void CommandServer::clientDisconnected()
@@ -118,8 +114,7 @@ void CommandServer::readSocket()
 
     while (socket->canReadLine()) {
         QByteArray line = socket->readLine().trimmed();
-        emit messageReceived(socket->peerName(),
-                             QString::fromUtf8(line.constData(), line.length()));
+        emit messageReceived(socket->peerName(), QString::fromUtf8(line.constData(), line.length()));
         qDebug() << QString::fromUtf8(line.constData(), line.length());
     }
 }

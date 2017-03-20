@@ -1,14 +1,10 @@
 #ifndef COMMANDSERVER_H
 #define COMMANDSERVER_H
 
-#include <qbluetoothserviceinfo.h>
-#include <qbluetoothaddress.h>
-
-#include <QtCore/QObject>
-#include <QtCore/QList>
-
-QT_FORWARD_DECLARE_CLASS(QBluetoothServer)
-QT_FORWARD_DECLARE_CLASS(QBluetoothSocket)
+#include "message.h"
+#include <QBluetoothServer>
+#include <QBluetoothSocket>
+#include <QBluetoothServiceInfo>
 
 QT_USE_NAMESPACE
 
