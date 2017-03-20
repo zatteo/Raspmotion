@@ -226,7 +226,8 @@ DIST          = ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/spec_pre.prf 
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../raspmotion-server/raspmotion-server.pro ../raspmotion-server/commandserver.h \
-		../raspmotion-server/server.h ../raspmotion-server/main.cpp \
+		../raspmotion-server/server.h \
+		../raspmotion-server/message.h ../raspmotion-server/main.cpp \
 		../raspmotion-server/commandserver.cpp \
 		../raspmotion-server/server.cpp
 QMAKE_TARGET  = raspmotion-client
@@ -598,7 +599,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../raspmotion-server/commandserver.h ../raspmotion-server/server.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../raspmotion-server/commandserver.h ../raspmotion-server/server.h ../raspmotion-server/message.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../raspmotion-server/main.cpp ../raspmotion-server/commandserver.cpp ../raspmotion-server/server.cpp $(DISTDIR)/
 
 
@@ -1094,10 +1095,7 @@ server.o: ../raspmotion-server/server.cpp ../raspmotion-server/server.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdeviceinfo.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qprocess.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothlocaldevice.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothHostInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QTimer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtimer.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qbasictimer.h
+		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothHostInfo
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o ../raspmotion-server/server.cpp
 
 moc_commandserver.o: moc_commandserver.cpp 

@@ -6,7 +6,10 @@
 
 static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
 
-CommandServer::CommandServer(QObject *parent): QObject(parent), rfcommServer(0){}
+CommandServer::CommandServer(QObject *parent): QObject(parent), rfcommServer(0)
+{
+    qDebug() << "CommandServer 0.1\n";
+}
 
 CommandServer::~CommandServer()
 {
@@ -59,7 +62,7 @@ void CommandServer::startServer(const QBluetoothAddress& localAdapter)
 
     serviceInfo.registerService(localAdapter);
 
-    qDebug() << "CommandServer started";
+    qDebug() << "Waiting for a CommandController...";
 }
 
 void CommandServer::stopServer()

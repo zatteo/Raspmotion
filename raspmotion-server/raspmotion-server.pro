@@ -28,4 +28,5 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS = \
     commandserver.h \
-    server.h
+    server.h \
+    message.h
