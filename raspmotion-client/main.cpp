@@ -1,5 +1,4 @@
 #include <QCoreApplication>
-#include <QDebug>
 #include <client.h>
 #include <unistd.h>
 

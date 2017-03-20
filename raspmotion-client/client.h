@@ -1,9 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <QBluetoothServiceDiscoveryAgent>
 #include <QBluetoothSocket>
-#include <QObject>
+#include <QBluetoothServiceDiscoveryAgent>
 
 class Client : public QObject
 {
@@ -11,7 +10,6 @@ class Client : public QObject
 
 public:
     explicit Client(QObject *parent = 0);
-
     void stop();
 
 public slots:
@@ -19,7 +17,6 @@ public slots:
     void sendMessage(const QString &message);
     void discoverAndStart();
     void serviceDiscovered(const QBluetoothServiceInfo &service);
-    void bonjour();
     void fini();
 
 signals:

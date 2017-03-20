@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Client_t {
-    QByteArrayData data[18];
-    char stringdata0[180];
+    QByteArrayData data[17];
+    char stringdata0[172];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,16 +46,15 @@ QT_MOC_LITERAL(11, 91, 16), // "discoverAndStart"
 QT_MOC_LITERAL(12, 108, 17), // "serviceDiscovered"
 QT_MOC_LITERAL(13, 126, 21), // "QBluetoothServiceInfo"
 QT_MOC_LITERAL(14, 148, 7), // "service"
-QT_MOC_LITERAL(15, 156, 7), // "bonjour"
-QT_MOC_LITERAL(16, 164, 4), // "fini"
-QT_MOC_LITERAL(17, 169, 10) // "readSocket"
+QT_MOC_LITERAL(15, 156, 4), // "fini"
+QT_MOC_LITERAL(16, 161, 10) // "readSocket"
 
     },
     "Client\0found\0\0messageReceived\0sender\0"
     "message\0connected\0name\0disconnected\0"
     "start\0sendMessage\0discoverAndStart\0"
     "serviceDiscovered\0QBluetoothServiceInfo\0"
-    "service\0bonjour\0fini\0readSocket"
+    "service\0fini\0readSocket"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +64,7 @@ static const uint qt_meta_data_Client[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,20 +72,19 @@ static const uint qt_meta_data_Client[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   74,    2, 0x06 /* Public */,
-       3,    2,   75,    2, 0x06 /* Public */,
-       6,    1,   80,    2, 0x06 /* Public */,
-       8,    0,   83,    2, 0x06 /* Public */,
+       1,    0,   69,    2, 0x06 /* Public */,
+       3,    2,   70,    2, 0x06 /* Public */,
+       6,    1,   75,    2, 0x06 /* Public */,
+       8,    0,   78,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    0,   84,    2, 0x0a /* Public */,
-      10,    1,   85,    2, 0x0a /* Public */,
-      11,    0,   88,    2, 0x0a /* Public */,
-      12,    1,   89,    2, 0x0a /* Public */,
-      15,    0,   92,    2, 0x0a /* Public */,
-      16,    0,   93,    2, 0x0a /* Public */,
-      17,    0,   94,    2, 0x08 /* Private */,
-       6,    0,   95,    2, 0x08 /* Private */,
+       9,    0,   79,    2, 0x0a /* Public */,
+      10,    1,   80,    2, 0x0a /* Public */,
+      11,    0,   83,    2, 0x0a /* Public */,
+      12,    1,   84,    2, 0x0a /* Public */,
+      15,    0,   87,    2, 0x0a /* Public */,
+      16,    0,   88,    2, 0x08 /* Private */,
+       6,    0,   89,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -99,7 +97,6 @@ static const uint qt_meta_data_Client[] = {
     QMetaType::Void, QMetaType::QString,    5,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 13,   14,
-    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -121,10 +118,9 @@ void Client::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 5: _t->sendMessage((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 6: _t->discoverAndStart(); break;
         case 7: _t->serviceDiscovered((*reinterpret_cast< const QBluetoothServiceInfo(*)>(_a[1]))); break;
-        case 8: _t->bonjour(); break;
-        case 9: _t->fini(); break;
-        case 10: _t->readSocket(); break;
-        case 11: _t->connected(); break;
+        case 8: _t->fini(); break;
+        case 9: _t->readSocket(); break;
+        case 10: _t->connected(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -197,13 +193,13 @@ int Client::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 11;
     }
     return _id;
 }

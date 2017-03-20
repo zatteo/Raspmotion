@@ -21,9 +21,6 @@ void Client::discoverAndStart()
 
 void Client::serviceDiscovered(const QBluetoothServiceInfo &service)
 {
-
-    qDebug() << "Device :" << service.device().address().toString();
-
     if(service.serviceUuid() == QBluetoothUuid(serviceUuid))
     {
 
@@ -45,11 +42,9 @@ void Client::start()
     if(!serviceInfo)
         return;
 
-    qDebug() << "Waiting for connection with the CommandServer...";
+    qDebug() << "Trying to connect with the CommandServer...";
     socket = new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol);
-    qDebug() << "Création du socket";
     socket->connectToService(*serviceInfo);
-    qDebug() << "ConnectToService done";
 
     qDebug() << serviceInfo;
 
@@ -68,17 +63,10 @@ void Client::connected()
 {
     qDebug() << "Connected";
     emit connected(socket->peerName());
-    bonjour();
-}
-
-void Client::bonjour()
-{
-    sendMessage("bonjour");
 }
 
 void Client::sendMessage(const QString &message)
 {
-    qDebug() << "envoi du message" << message;
     QByteArray text = message.toUtf8() + '\n';
     socket->write(text);
 }

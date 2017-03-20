@@ -221,7 +221,8 @@ DIST          = ../../Qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt/5.8/gcc_64/mkspecs/features/exceptions.prf \
 		../../Qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../Qt/5.8/gcc_64/mkspecs/features/lex.prf \
-		../raspmotion-client/raspmotion-client.pro ../raspmotion-client/client.h ../raspmotion-client/main.cpp \
+		../raspmotion-client/raspmotion-client.pro ../raspmotion-client/client.h \
+		../raspmotion-client/message.h ../raspmotion-client/main.cpp \
 		../raspmotion-client/client.cpp
 QMAKE_TARGET  = raspmotion-client
 DESTDIR       = 
@@ -592,7 +593,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../raspmotion-client/client.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../raspmotion-client/client.h ../raspmotion-client/message.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../raspmotion-client/main.cpp ../raspmotion-client/client.cpp $(DISTDIR)/
 
 
@@ -628,8 +629,8 @@ moc_predefs.h: ../../Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_client.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_client.cpp
-moc_client.cpp: ../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
+moc_client.cpp: ../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
@@ -653,46 +654,46 @@ moc_client.cpp: ../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscove
 		../../Qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QObject \
-		../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../../Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QString \
+		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
+		../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
+		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
+		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QDebug \
+		../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qpair.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qregexp.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QDebug \
-		../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -702,24 +703,24 @@ moc_client.cpp: ../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscove
 		../../Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../Qt/5.8/gcc_64/include/QtCore/QString \
 		../../Qt/5.8/gcc_64/include/QtCore/QList \
 		../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
 		../../Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdeviceinfo.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		../raspmotion-client/client.h \
 		moc_predefs.h \
 		../../Qt/5.8/gcc_64/bin/moc
@@ -787,6 +788,19 @@ main.o: ../raspmotion-client/main.cpp ../../Qt/5.8/gcc_64/include/QtCore/QCoreAp
 		../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
+		../raspmotion-client/client.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
+		../../Qt/5.8/gcc_64/include/QtCore/QString \
+		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
+		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
+		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
 		../../Qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
@@ -802,42 +816,29 @@ main.o: ../raspmotion-client/main.cpp ../../Qt/5.8/gcc_64/include/QtCore/QCoreAp
 		../../Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../raspmotion-client/client.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QObject \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../Qt/5.8/gcc_64/include/QtCore/QString \
 		../../Qt/5.8/gcc_64/include/QtCore/QList \
 		../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
 		../../Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdeviceinfo.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h
+		../../Qt/5.8/gcc_64/include/QtCore/qprocess.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../raspmotion-client/main.cpp
 
 client.o: ../raspmotion-client/client.cpp ../raspmotion-client/client.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
@@ -861,46 +862,46 @@ client.o: ../raspmotion-client/client.cpp ../raspmotion-client/client.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QObject \
-		../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
 		../../Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qchar.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QString \
+		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
+		../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
+		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
+		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QDebug \
+		../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qiterator.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qlist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qpair.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringlist.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qregexp.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../Qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../Qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../Qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QDebug \
-		../../Qt/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qtextstream.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -910,24 +911,24 @@ client.o: ../raspmotion-client/client.cpp ../raspmotion-client/client.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../Qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../Qt/5.8/gcc_64/include/QtCore/QString \
 		../../Qt/5.8/gcc_64/include/QtCore/QList \
 		../../Qt/5.8/gcc_64/include/QtCore/QSharedPointer \
 		../../Qt/5.8/gcc_64/include/QtCore/QVariant \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceDiscoveryAgent \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothservicediscoveryagent.h \
+		../../Qt/5.8/gcc_64/include/QtCore/QObject \
+		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceDiscoveryAgent \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdevicediscoveryagent.h \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothDeviceInfo \
 		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothdeviceinfo.h \
-		../../Qt/5.8/gcc_64/include/QtCore/qprocess.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../Qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../Qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h
+		../../Qt/5.8/gcc_64/include/QtCore/qprocess.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o client.o ../raspmotion-client/client.cpp
 
 moc_client.o: moc_client.cpp 
