@@ -1,8 +1,9 @@
-#include <qbluetoothserviceinfo.h>
-#include <qbluetoothsocket.h>
-#include <qbluetoothhostinfo.h>
+#ifndef SERVER_H
+#define SERVER_H
 
-#include <QDebug>
+#include "commandserver.h"
+#include <QBluetoothHostInfo>
+#include <QBluetoothLocalDevice>
 
 QT_USE_NAMESPACE
 
@@ -16,13 +17,10 @@ public:
     Server(QObject *parent = 0);
     ~Server();
 
-private slots:
-
 private:
-    int currentAdapterIndex;
-
     CommandServer *server;
     QList<QBluetoothHostInfo> localAdapters;
-
     QString localName;
 };
+
+#endif // SERVER_H
