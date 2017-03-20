@@ -2,11 +2,15 @@
 
 static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
 
-Client::Client(QObject *parent): QObject(parent){}
+Client::Client(QObject *parent): QObject(parent)
+{
+    qDebug() << "CommandController 0.1\n";
+}
 
 void Client::discoverAndStart()
 {
-    qDebug() << "Searching a CommandServer..." << endl;
+    qDebug() << "Searching a CommandServer...";
+
     QBluetoothServiceDiscoveryAgent *discoveryAgent = new QBluetoothServiceDiscoveryAgent(this);
 
     connect(discoveryAgent, SIGNAL(serviceDiscovered(QBluetoothServiceInfo)), this, SLOT(serviceDiscovered(QBluetoothServiceInfo)));
