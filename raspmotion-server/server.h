@@ -1,11 +1,12 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "Leap.h"
 #include "commandserver.h"
 #include <QBluetoothHostInfo>
 #include <QBluetoothLocalDevice>
 
-QT_USE_NAMESPACE
+using namespace Leap;
 
 class CommandServer;
 
@@ -18,9 +19,13 @@ public:
     ~Server();
 
 private:
+    // Bluetooth
     CommandServer *server;
     QList<QBluetoothHostInfo> localAdapters;
     QString localName;
+
+    // Leap Motion
+    Controller controller;
 };
 
 #endif // SERVER_H

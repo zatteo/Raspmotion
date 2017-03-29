@@ -4,7 +4,7 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = raspmotion-client
+TARGET = raspmotion-server
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -30,3 +30,10 @@ HEADERS = \
     commandserver.h \
     server.h \
     message.h
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/lib/release/ -lLeap
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/lib/debug/ -lLeap
+else:unix: LIBS += -L$$PWD/lib/ -lLeap
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.

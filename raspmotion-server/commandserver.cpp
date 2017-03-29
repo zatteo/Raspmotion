@@ -91,7 +91,7 @@ void CommandServer::clientConnected()
     emit clientConnected(socket->peerName());
     qDebug() << "CommandController connected";
 
-    sendMessage(TOP);
+    sendMessage(BOT);
 }
 
 void CommandServer::clientDisconnected()
