@@ -1,6 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+#define ERR "0"
 #define TOP "1"
 #define BOT "2"
 #define LEFT "3"
@@ -14,5 +15,6 @@
 #define FIRE "11"
 #define WEAPON_LEFT "12"
 #define WEAPON_RIGHT "13"
+
 
 #endif // MESSAGE_H
