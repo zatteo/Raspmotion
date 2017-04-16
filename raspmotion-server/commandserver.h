@@ -1,7 +1,6 @@
 #ifndef COMMANDSERVER_H
 #define COMMANDSERVER_H
 
-#include "message.h"
 #include <QBluetoothServer>
 #include <QBluetoothSocket>
 #include <QBluetoothServiceInfo>
@@ -35,7 +34,7 @@ private slots:
 private:
     QBluetoothServer *rfcommServer;
     QBluetoothServiceInfo serviceInfo;
-    QBluetoothSocket *client;
+    QBluetoothSocket *client = NULL;
 };
 
 #endif // COMMANDSERVER_H

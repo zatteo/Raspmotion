@@ -50,13 +50,11 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../raspmotion-server/main.cpp \
 		../raspmotion-server/commandserver.cpp \
-		../raspmotion-server/server.cpp moc_commandserver.cpp \
-		moc_server.cpp
+		../raspmotion-server/leapmotionlistener.cpp moc_commandserver.cpp
 OBJECTS       = main.o \
 		commandserver.o \
-		server.o \
-		moc_commandserver.o \
-		moc_server.o
+		leapmotionlistener.o \
+		moc_commandserver.o
 DIST          = ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/common/unix.conf \
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/common/linux.conf \
@@ -226,10 +224,10 @@ DIST          = ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/spec_pre.prf 
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../raspmotion-server/raspmotion-server.pro ../raspmotion-server/commandserver.h \
-		../raspmotion-server/server.h \
-		../raspmotion-server/message.h ../raspmotion-server/main.cpp \
+		../raspmotion-server/message.h \
+		../raspmotion-server/leapmotionlistener.h ../raspmotion-server/main.cpp \
 		../raspmotion-server/commandserver.cpp \
-		../raspmotion-server/server.cpp
+		../raspmotion-server/leapmotionlistener.cpp
 QMAKE_TARGET  = raspmotion-server
 DESTDIR       = 
 TARGET        = raspmotion-server
@@ -599,8 +597,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../raspmotion-server/commandserver.h ../raspmotion-server/server.h ../raspmotion-server/message.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../raspmotion-server/main.cpp ../raspmotion-server/commandserver.cpp ../raspmotion-server/server.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../raspmotion-server/commandserver.h ../raspmotion-server/message.h ../raspmotion-server/leapmotionlistener.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../raspmotion-server/main.cpp ../raspmotion-server/commandserver.cpp ../raspmotion-server/leapmotionlistener.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -632,9 +630,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_commandserver.cpp moc_server.cpp
+compiler_moc_header_make_all: moc_commandserver.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_commandserver.cpp moc_server.cpp
+	-$(DEL_FILE) moc_commandserver.cpp
 moc_commandserver.cpp: ../raspmotion-server/message.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
@@ -728,106 +726,6 @@ moc_commandserver.cpp: ../raspmotion-server/message.h \
 		../../../../Desktop/qt/5.8/gcc_64/bin/moc
 	/home/zatteo/Desktop/qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/zatteo/Desktop/qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Desktop/qt/5.8/gcc_64/include -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtBluetooth -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-redhat-linux -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include -I/usr/local/include -I/usr/include ../raspmotion-server/commandserver.h -o moc_commandserver.cpp
 
-moc_server.cpp: ../raspmotion-server/Leap.h \
-		../raspmotion-server/LeapMath.h \
-		../raspmotion-server/commandserver.h \
-		../raspmotion-server/message.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtcore-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlogging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qflags.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qatomic.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmutex.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnumeric.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QObject \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qstring.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qchar.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlist.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiterator.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qpair.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qregexp.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QString \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qdebug.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhash.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmap.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlocale.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvariant.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvector.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qpoint.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qset.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QList \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QSharedPointer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothHostInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothhostinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothLocalDevice \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothlocaldevice.h \
-		../raspmotion-server/server.h \
-		moc_predefs.h \
-		../../../../Desktop/qt/5.8/gcc_64/bin/moc
-	/home/zatteo/Desktop/qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/zatteo/Desktop/qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Desktop/qt/5.8/gcc_64/include -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtBluetooth -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-redhat-linux -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include -I/usr/local/include -I/usr/include ../raspmotion-server/server.h -o moc_server.cpp
-
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_yacc_decl_make_all:
@@ -840,7 +738,7 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../raspmotion-server/main.cpp ../raspmotion-server/server.h \
+main.o: ../raspmotion-server/main.cpp ../raspmotion-server/leapmotionlistener.h \
 		../raspmotion-server/Leap.h \
 		../raspmotion-server/LeapMath.h \
 		../raspmotion-server/commandserver.h \
@@ -1032,7 +930,7 @@ commandserver.o: ../raspmotion-server/commandserver.cpp ../raspmotion-server/com
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o commandserver.o ../raspmotion-server/commandserver.cpp
 
-server.o: ../raspmotion-server/server.cpp ../raspmotion-server/server.h \
+leapmotionlistener.o: ../raspmotion-server/leapmotionlistener.cpp ../raspmotion-server/leapmotionlistener.h \
 		../raspmotion-server/Leap.h \
 		../raspmotion-server/LeapMath.h \
 		../raspmotion-server/commandserver.h \
@@ -1128,13 +1026,10 @@ server.o: ../raspmotion-server/server.cpp ../raspmotion-server/server.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothhostinfo.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothLocalDevice \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothlocaldevice.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o ../raspmotion-server/server.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o leapmotionlistener.o ../raspmotion-server/leapmotionlistener.cpp
 
 moc_commandserver.o: moc_commandserver.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_commandserver.o moc_commandserver.cpp
-
-moc_server.o: moc_server.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_server.o moc_server.cpp
 
 ####### Install
 

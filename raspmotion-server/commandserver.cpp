@@ -4,7 +4,7 @@ static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
 
 CommandServer::CommandServer(QObject *parent): QObject(parent), rfcommServer(0)
 {
-    qDebug() << "CommandServer 0.1\n";
+    qDebug() << "CommandServer 0.1 started\n";
 }
 
 CommandServer::~CommandServer()
@@ -54,12 +54,11 @@ void CommandServer::startServer(const QBluetoothAddress& localAdapter)
     protocol.clear();
     protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::Rfcomm)) << QVariant::fromValue(quint8(rfcommServer->serverPort()));
     protocolDescriptorList.append(QVariant::fromValue(protocol));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ProtocolDescriptorList,
-                             protocolDescriptorList);
+    serviceInfo.setAttribute(QBluetoothServiceInfo::ProtocolDescriptorList, protocolDescriptorList);
 
     serviceInfo.registerService(localAdapter);
 
-    qDebug() << "Waiting for a CommandController...";
+    qDebug() << "Waiting for a tablet...";
 }
 
 void CommandServer::stopServer()
@@ -70,10 +69,15 @@ void CommandServer::stopServer()
 
     delete rfcommServer;
     rfcommServer = 0;
+
+    qDebug() << "CommandServer stopped";
 }
 
 void CommandServer::sendMessage(const QString &message)
 {
+    if(client == NULL)
+        return;
+
     QByteArray text = message.toUtf8() + '\n';
 
     client->write(text);
@@ -89,9 +93,7 @@ void CommandServer::clientConnected()
     connect(socket, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
     client = socket;
     emit clientConnected(socket->peerName());
-    qDebug() << "CommandController connected";
-
-    sendMessage(BOT);
+    qDebug() << "Tablet connected";
 }
 
 void CommandServer::clientDisconnected()
@@ -101,6 +103,7 @@ void CommandServer::clientDisconnected()
         return;
 
     emit clientDisconnected(socket->peerName());
+    qDebug() << "Tablet disconnected";
 
     client->deleteLater();
     socket->deleteLater();
