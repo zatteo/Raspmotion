@@ -1,123 +1,62 @@
 #include "commandserver.h"
+#include <QNetworkDatagram>
 
-static const QLatin1String serviceUuid("e8e10f95-1a70-4b27-9ccf-02010264e9c9");
+#include "message.h"
 
-CommandServer::CommandServer(QObject *parent): QObject(parent), rfcommServer(0)
+CommandServer::CommandServer(QObject *parent): QObject(parent)
 {
-    qDebug() << "CommandServer 0.1 started\n";
+//    port = 1234;
+
+//    hostTablet = QHostAddress("192.168.43.13");
+
+//    portTablet = 26000;
+
+//    socket = new QUdpSocket(this);
+//    socket->bind(QHostAddress::Any, port);
+
+//    connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+
+//    write('c');
+
+        QTextStream s(stdin);
+        qDebug() << "Port d'écoute :";
+        port = s.readLine().toShort();
+
+        qDebug() << "IP de la tablette :";
+        hostTablet = QHostAddress(s.readLine());
+
+        qDebug() << "Port de la tablette:";
+        portTablet = s.readLine().toShort();
+
+        socket = new QUdpSocket(this);
+        socket->bind(QHostAddress::Any, port);
+
+        connect(socket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+
+        write('c');
 }
 
 CommandServer::~CommandServer()
 {
-    stopServer();
+
 }
 
-void CommandServer::startServer(const QBluetoothAddress& localAdapter)
+/* prend en paramètre 2 entiers sur 16 bits
+ * cmd : le numéro de la commande
+ * arg : l'argument éventuel de la commande
+ */
+void CommandServer::write(char c)
 {
-    if (rfcommServer)
-        return;
-
-    rfcommServer = new QBluetoothServer(QBluetoothServiceInfo::RfcommProtocol, this);
-    connect(rfcommServer, SIGNAL(newConnection()), this, SLOT(clientConnected()));
-
-    bool result = rfcommServer->listen(localAdapter);
-    if (!result)
-    {
-        qWarning() << "ERR : Cannot bind chat server to" << localAdapter.toString();
-        return;
-    }
-
-    QBluetoothServiceInfo::Sequence classId;
-
-    classId << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::SerialPort));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::BluetoothProfileDescriptorList, classId);
-
-    classId.prepend(QVariant::fromValue(QBluetoothUuid(serviceUuid)));
-
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ServiceClassIds, classId);
-    serviceInfo.setAttribute(QBluetoothServiceInfo::BluetoothProfileDescriptorList, classId);
-
-    // service name, description, provider and UUID
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ServiceName, tr("CommandServer"));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ServiceDescription, tr("CommandServer 0.1"));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ServiceProvider, tr("ProjetIntegrateur2017"));
-    serviceInfo.setServiceUuid(QBluetoothUuid(serviceUuid));
-
-    QBluetoothServiceInfo::Sequence publicBrowse;
-    publicBrowse << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::PublicBrowseGroup));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::BrowseGroupList, publicBrowse);
-
-    QBluetoothServiceInfo::Sequence protocolDescriptorList;
-    QBluetoothServiceInfo::Sequence protocol;
-    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::L2cap));
-    protocolDescriptorList.append(QVariant::fromValue(protocol));
-    protocol.clear();
-    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::Rfcomm)) << QVariant::fromValue(quint8(rfcommServer->serverPort()));
-    protocolDescriptorList.append(QVariant::fromValue(protocol));
-    serviceInfo.setAttribute(QBluetoothServiceInfo::ProtocolDescriptorList, protocolDescriptorList);
-
-    serviceInfo.registerService(localAdapter);
-
-    qDebug() << "Waiting for a tablet...";
+    qDebug() << "a";
+    socket->writeDatagram("aaaa", 4, hostTablet, portTablet);
 }
 
-void CommandServer::stopServer()
+void CommandServer::readPendingDatagrams()
 {
-    serviceInfo.unregisterService();
+    qDebug() << "yolo";
 
-    delete client;
-
-    delete rfcommServer;
-    rfcommServer = 0;
-
-    qDebug() << "CommandServer stopped";
-}
-
-void CommandServer::sendMessage(const QString &message)
-{
-    if(client == NULL)
-        return;
-
-    QByteArray text = message.toUtf8() + '\n';
-
-    client->write(text);
-}
-
-void CommandServer::clientConnected()
-{
-    QBluetoothSocket *socket = rfcommServer->nextPendingConnection();
-    if (!socket)
-        return;
-
-    connect(socket, SIGNAL(readyRead()), this, SLOT(readSocket()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(clientDisconnected()));
-    client = socket;
-    emit clientConnected(socket->peerName());
-    qDebug() << "Tablet connected";
-}
-
-void CommandServer::clientDisconnected()
-{
-    QBluetoothSocket *socket = qobject_cast<QBluetoothSocket *>(sender());
-    if (!socket)
-        return;
-
-    emit clientDisconnected(socket->peerName());
-    qDebug() << "Tablet disconnected";
-
-    client->deleteLater();
-    socket->deleteLater();
-}
-
-void CommandServer::readSocket()
-{
-    QBluetoothSocket *socket = qobject_cast<QBluetoothSocket *>(sender());
-    if (!socket)
-        return;
-
-    while (socket->canReadLine()) {
-        QByteArray line = socket->readLine().trimmed();
-        emit messageReceived(socket->peerName(), QString::fromUtf8(line.constData(), line.length()));
-        qDebug() << QString::fromUtf8(line.constData(), line.length());
+    while (socket->hasPendingDatagrams()) {
+        QNetworkDatagram datagram = socket->receiveDatagram();
+        qDebug() << QString::fromStdString(datagram.data().toStdString());
     }
 }

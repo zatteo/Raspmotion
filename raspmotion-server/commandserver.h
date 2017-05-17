@@ -1,9 +1,7 @@
 #ifndef COMMANDSERVER_H
 #define COMMANDSERVER_H
 
-#include <QBluetoothServer>
-#include <QBluetoothSocket>
-#include <QBluetoothServiceInfo>
+#include <QUdpSocket>
 
 QT_USE_NAMESPACE
 
@@ -15,26 +13,17 @@ public:
     explicit CommandServer(QObject *parent = 0);
     ~CommandServer();
 
-    void startServer(const QBluetoothAddress &localAdapter = QBluetoothAddress());
-    void stopServer();
-
 public slots:
-    void sendMessage(const QString &message);
-
-signals:
-    void messageReceived(const QString &sender, const QString &message);
-    void clientConnected(const QString &name);
-    void clientDisconnected(const QString &name);
-
-private slots:
-    void clientConnected();
-    void clientDisconnected();
-    void readSocket();
+    void readPendingDatagrams();
+    void write(char c);
 
 private:
-    QBluetoothServer *rfcommServer;
-    QBluetoothServiceInfo serviceInfo;
-    QBluetoothSocket *client = NULL;
+    qint16 port;
+
+    QHostAddress hostTablet;
+    qint16 portTablet;
+
+    QUdpSocket *socket;
 };
 
 #endif // COMMANDSERVER_H

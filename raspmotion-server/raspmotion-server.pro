@@ -1,5 +1,5 @@
 QT += core
-QT += bluetooth
+QT += network
 QT -= gui
 
 CONFIG += c++11

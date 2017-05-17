@@ -5,8 +5,6 @@
 #include "message.h"
 #include "commandserver.h"
 #include "leapmotionlistener.h"
-#include <QBluetoothHostInfo>
-#include <QBluetoothLocalDevice>
 #include <QDebug>
 
 using namespace Leap;
@@ -20,10 +18,7 @@ public:
     void update();
 
 private:
-    // Bluetooth
     CommandServer *server;
-    QList<QBluetoothHostInfo> localAdapters;
-    QString localName;
 
     // LeapMotion
     Hand handLeft;

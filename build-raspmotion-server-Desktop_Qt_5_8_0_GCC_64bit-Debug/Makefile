@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_BLUETOOTH_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../raspmotion-server -I. -I../raspmotion-server -I../../../../Desktop/qt/5.8/gcc_64/include -I../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth -I../../../../Desktop/qt/5.8/gcc_64/include/QtCore -I. -I../../../../Desktop/qt/5.8/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../raspmotion-server -I. -I../raspmotion-server -I../../../../Desktop/qt/5.8/gcc_64/include -I../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork -I../../../../Desktop/qt/5.8/gcc_64/include/QtCore -I. -I../../../../Desktop/qt/5.8/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/zatteo/Desktop/qt/5.8/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -35,8 +35,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = raspmotion-server1.0.0
 DISTDIR = /home/zatteo/Courses/l3s6/Raspmotion/build-raspmotion-server-Desktop_Qt_5_8_0_GCC_64bit-Debug/.tmp/raspmotion-server1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-rpath,/home/zatteo/Desktop/qt/5.8/gcc_64/lib -Wl,-rpath-link,/home/zatteo/Desktop/qt/5.8/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server/lib/ -lLeap -L/home/zatteo/Desktop/qt/5.8/gcc_64/lib -lQt5Bluetooth -lQt5Core -lpthread 
+LFLAGS        = -Wl,-rpath,/home/zatteo/Desktop/qt/5.8/gcc_64/lib
+LIBS          = $(SUBLIBS) -L/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server/lib/ -lLeap -L/home/zatteo/Desktop/qt/5.8/gcc_64/lib -lQt5Network -lQt5Core -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -408,7 +408,7 @@ Makefile: ../raspmotion-server/raspmotion-server.pro ../../../../Desktop/qt/5.8/
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		../raspmotion-server/raspmotion-server.pro \
-		../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Bluetooth.prl \
+		../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Network.prl \
 		../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Core.prl
 	$(QMAKE) -o Makefile ../raspmotion-server/raspmotion-server.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/spec_pre.prf:
@@ -580,7 +580,7 @@ Makefile: ../raspmotion-server/raspmotion-server.pro ../../../../Desktop/qt/5.8/
 ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/yacc.prf:
 ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/lex.prf:
 ../raspmotion-server/raspmotion-server.pro:
-../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Bluetooth.prl:
+../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Network.prl:
 ../../../../Desktop/qt/5.8/gcc_64/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../raspmotion-server/raspmotion-server.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -633,10 +633,9 @@ moc_predefs.h: ../../../../Desktop/qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_commandserver.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_commandserver.cpp
-moc_commandserver.cpp: ../raspmotion-server/message.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
+moc_commandserver.cpp: ../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/QUdpSocket \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qudpsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -659,7 +658,9 @@ moc_commandserver.cpp: ../raspmotion-server/message.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -685,24 +686,10 @@ moc_commandserver.cpp: ../raspmotion-server/message.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QString \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -712,19 +699,11 @@ moc_commandserver.cpp: ../raspmotion-server/message.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QList \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QSharedPointer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qhostaddress.h \
 		../raspmotion-server/commandserver.h \
 		moc_predefs.h \
 		../../../../Desktop/qt/5.8/gcc_64/bin/moc
-	/home/zatteo/Desktop/qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/zatteo/Desktop/qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Desktop/qt/5.8/gcc_64/include -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtBluetooth -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-redhat-linux -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include -I/usr/local/include -I/usr/include ../raspmotion-server/commandserver.h -o moc_commandserver.cpp
+	/home/zatteo/Desktop/qt/5.8/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/zatteo/Desktop/qt/5.8/gcc_64/mkspecs/linux-g++ -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Courses/l3s6/Raspmotion/raspmotion-server -I/home/zatteo/Desktop/qt/5.8/gcc_64/include -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtNetwork -I/home/zatteo/Desktop/qt/5.8/gcc_64/include/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-redhat-linux -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-redhat-linux/6.3.1/include -I/usr/local/include -I/usr/include ../raspmotion-server/commandserver.h -o moc_commandserver.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -741,11 +720,11 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 main.o: ../raspmotion-server/main.cpp ../raspmotion-server/leapmotionlistener.h \
 		../raspmotion-server/Leap.h \
 		../raspmotion-server/LeapMath.h \
-		../raspmotion-server/commandserver.h \
 		../raspmotion-server/message.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
+		../raspmotion-server/commandserver.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/QUdpSocket \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qudpsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -768,7 +747,9 @@ main.o: ../raspmotion-server/main.cpp ../raspmotion-server/leapmotionlistener.h 
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -794,24 +775,10 @@ main.o: ../raspmotion-server/main.cpp ../raspmotion-server/leapmotionlistener.h 
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QString \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -821,29 +788,17 @@ main.o: ../raspmotion-server/main.cpp ../raspmotion-server/leapmotionlistener.h 
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QList \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QSharedPointer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothHostInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothhostinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothLocalDevice \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothlocaldevice.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QCoreApplication \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qeventloop.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../raspmotion-server/main.cpp
 
 commandserver.o: ../raspmotion-server/commandserver.cpp ../raspmotion-server/commandserver.h \
-		../raspmotion-server/message.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/QUdpSocket \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qudpsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -866,7 +821,9 @@ commandserver.o: ../raspmotion-server/commandserver.cpp ../raspmotion-server/com
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -892,24 +849,10 @@ commandserver.o: ../raspmotion-server/commandserver.cpp ../raspmotion-server/com
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QString \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -919,25 +862,20 @@ commandserver.o: ../raspmotion-server/commandserver.cpp ../raspmotion-server/com
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QList \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QSharedPointer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/QNetworkDatagram \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qnetworkdatagram.h \
+		../raspmotion-server/message.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o commandserver.o ../raspmotion-server/commandserver.cpp
 
 leapmotionlistener.o: ../raspmotion-server/leapmotionlistener.cpp ../raspmotion-server/leapmotionlistener.h \
 		../raspmotion-server/Leap.h \
 		../raspmotion-server/LeapMath.h \
-		../raspmotion-server/commandserver.h \
 		../raspmotion-server/message.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserver.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothglobal.h \
+		../raspmotion-server/commandserver.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/QUdpSocket \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qudpsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -960,7 +898,9 @@ leapmotionlistener.o: ../raspmotion-server/leapmotionlistener.cpp ../raspmotion-
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QObject \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qnamespace.h \
@@ -986,24 +926,10 @@ leapmotionlistener.o: ../raspmotion-server/leapmotionlistener.cpp ../raspmotion-
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothAddress \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothaddress.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QByteArray \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QString \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QMetaType \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetooth.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothSocket \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothuuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QtGlobal \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/quuid.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qdebug.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qmap.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qlocale.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qvariant.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qshareddata.h \
@@ -1013,19 +939,8 @@ leapmotionlistener.o: ../raspmotion-server/leapmotionlistener.cpp ../raspmotion-
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothserviceinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothUuid \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QList \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QSharedPointer \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QVariant \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothServiceInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothHostInfo \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothhostinfo.h \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/QBluetoothLocalDevice \
-		../../../../Desktop/qt/5.8/gcc_64/include/QtBluetooth/qbluetoothlocaldevice.h
+		../../../../Desktop/qt/5.8/gcc_64/include/QtNetwork/qhostaddress.h \
+		../../../../Desktop/qt/5.8/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o leapmotionlistener.o ../raspmotion-server/leapmotionlistener.cpp
 
 moc_commandserver.o: moc_commandserver.cpp 
